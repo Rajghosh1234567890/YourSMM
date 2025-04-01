@@ -140,8 +140,8 @@
             const Userid = prompt("User id:");
             const password = prompt("Password:");
             const Retypepassword= prompt("Retype pepassword:");
-            if ( name && userid && password && Retypepassword) {
-                createUserWithEmailAndPassword(auth, name, userid, Password , retypepassword)
+            if ( gmail&& password) {
+                createUserWithEmailAndPassword(auth, gmail,password)
                     .then(() => {
                         alert("Registration successful! Welcome! 👋");
                     })
