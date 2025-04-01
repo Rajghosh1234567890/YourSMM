@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your SMM Panel - Premium Social Media Services</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Snow Effect */
+        .snow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        
+        /* Glassmorphism Effect */
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .dark .glass {
+            background: rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Smooth transitions */
+        .transition-all {
+            transition: all 0.3s ease;
+        }
+        
+        /* Pulse animation for CTA */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        /* Text animation */
+        @keyframes glow {
+            0% { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #0073e6, 0 0 20px #0073e6; }
+            50% { text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #0073e6, 0 0 40px #0073e6; }
+            100% { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #0073e6, 0 0 20px #0073e6; }
+        }
+        .glow-text {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        /* Snow toggle effect */
+        .snow-toggle {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-all">
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyCIpzJsnvW6DgC8xqfSsUTBarDLjFDbOgo",
+            authDomain: "login-a6ac7.firebaseapp.com",
+            projectId: "login-a6ac7",
+            storageBucket: "login-a6ac7.appspot.com",
+            messagingSenderId: "623790144255",
+            appId: "1:623790144255:web:bb77f812f4f36af197eaca",
+            measurementId: "G-7L70ET8CT3"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const analytics = getAnalytics(app);
+        
+        // Auth state listener
+        onAuthStateChanged(auth, (user) => {
+            const loginBtn = document.getElementById('login-btn');
+            const registerBtn = document.getElementById('register-btn');
+            const logoutBtn = document.getElementById('logout-btn');
+            const userProfile = document.getElementById('user-profile');
+            const mobileLogin = document.getElementById('mobile-login-btn');
+            const mobileRegister = document.getElementById('mobile-register-btn');
+            const mobileLogout = document.getElementById('mobile-logout-btn');
+            
+            if (user) {
+                // User is signed in
+                loginBtn.classList.add('hidden');
+                registerBtn.classList.add('hidden');
+                logoutBtn.classList.remove('hidden');
+                userProfile.classList.remove('hidden');
+                userProfile.textContent = user.email;
+                mobileLogin.classList.add('hidden');
+                mobileRegister.classList.add('hidden');
+                mobileLogout.classList.remove('hidden');
+            } else {
+                // User is signed out
+                loginBtn.classList.remove('hidden');
+                registerBtn.classList.remove('hidden');
+                logoutBtn.classList.add('hidden');
+                userProfile.classList.add('hidden');
+                mobileLogin.classList.remove('hidden');
+                mobileRegister.classList.remove('hidden');
+                mobileLogout.classList.add('hidden');
+            }
+        });
+        
+        // Login function
+        window.login = function() {
+            const email = prompt("Enter your email:");
+            const password = prompt("Enter your password:");
+            
+            if (email && password) {
+                signInWithEmailAndPassword(auth, email, password)
+                    .then(() => {
+                        alert("Login successful! 🎉");
+                    })
+                    .catch((error) => {
+                        alert("Login failed: " + error.message);
+                    });
+            }
+        };
+        
+        // Register function
+        window.register = function() {
+            const email = prompt("Enter your email:");
+            const password = prompt("Enter your password:");
+            
+            if (email && password) {
+                createUserWithEmailAndPassword(auth, email, password)
+                    .then(() => {
+                        alert("Registration successful! Welcome! 👋");
+                    })
+                    .catch((error) => {
+                        alert("Registration failed: " + error.message);
+                    });
+            }
+        };
+        
+        // Logout function
+        window.logout = function() {
+            signOut(auth).then(() => {
+                alert("Logged out successfully! 👋");
+            }).catch((error) => {
+                alert("Logout failed: " + error.message);
+            });
+        };
+        
+        // Add funds function
+        window.addFunds = function() {
+            alert("Redirecting to payment gateway...");
+            // In a real implementation, this would redirect to payment page
+        };
+    </script>
+
+    <!-- Snow Effect Canvas -->
+    <canvas id="snow" class="snow"></canvas>
+    
+    <!-- Snow Toggle Button -->
+    <button id="snow-toggle" class="snow-toggle bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full shadow-lg">
+        <i class="fas fa-snowflake"></i>
+    </button>
+    
+    <!-- Navigation Bar -->
+    <nav class="bg-blue-600 dark:bg-blue-800 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <img src="https://i.ibb.co/Jwy5vJb6/logo.png" alt="Your SMM Panel Logo" class="h-10">
+                <span class="text-xl font-bold">Your SMM Panel</span>
+            </div>
+            
+            <div class="hidden md:flex space-x-6">
+                <a href="#" class="hover:text-blue-200">Home</a>
+                <div class="relative group">
+                    <button class="hover:text-blue-200 flex items-center">
+                        Services <i class="fas fa-chevron-down ml-1 text-sm"></i>
+                    </button>
+                    <div class="absolute left-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1 z-50 hidden group-hover:block">
+                        <a href="#youtube" class="block px-4 py-2 hover:bg-blue-100 dark:hover:bg-blue-700">YouTube Services</a>
+                        <a href="#instagram" class="block px-4 py-2 hover:bg-blue-100 dark:hover:bg-blue-700">Instagram Services</a>
+                        <a href="#facebook" class="block px-4 py-2 hover:bg-blue-100 dark:hover:bg-blue-700">Facebook Services</a>
+                        <a href="#tiktok" class="block px-4 py-2 hover:bg-blue-100 dark:hover:bg-blue-700">TikTok Services</a>
+                        <a href="#twitter" class="block px-4 py-2 hover:bg-blue-100 dark:hover:bg-blue-700">Twitter Services</a>
+                        <a href="#spotify" class="block px-4 py-2 hover:bg-blue-100 dark:hover:bg-blue-700">Spotify Services</a>
+                        <a href="#telegram" class="block px-4 py-2 hover:bg-blue-100 dark:hover:bg-blue-700">Telegram Services</a>
+                        <a href="#traffic" class="block px-4 py-2 hover:bg-blue-100 dark:hover:bg-blue-700">Website Traffic</a>
+                    </div>
+                </div>
+                <a href="#reviews" class="hover:text-blue-200">Reviews</a>
+                <a href="#api" class="hover:text-blue-200">API</a>
+                <a href="#contact" class="hover:text-blue-200">Contact</a>
+                <div class="relative group">
+                    <button class="hover:text-blue-200 flex items-center">
+                        More <i class="fas fa-chevron-down ml-1 text-sm"></i>
+                    </button>
+                    <div class="absolute left-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1 z-50 hidden group-hover:block">
+                        <a href="#" class="block px-4 py-2 hover:bg-blue-100 dark:hover:bg-blue-700">Blog</a>
+                        <a href="#" class="block px-4 py-2 hover:bg-blue-100 dark:hover:bg-blue-700">FAQ</a>
+                        <a href="#" class="block px-4 py-2 hover:bg-blue-100 dark:hover:bg-blue-700">Terms</a>
+                        <a href="#" class="block px-4 py-2 hover:bg-blue-100 dark:hover:bg-blue-700">Privacy</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <div class="relative group">
+                    <button class="hover:text-blue-200 flex items-center">
+                        <i class="fas fa-dollar-sign mr-1"></i> USD <i class="fas fa-chevron-down ml-1 text-sm"></i>
+                    </button>
+                    <div class="absolute right-0 mt-2 w-32 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1 z-50 hidden group-hover:block">
+                        <a href="#" class="block px-4 py-2 hover:bg-blue-100 dark:hover:bg-blue-700">USD ($)</a>
+                        <a href="#" class="block px-4 py-2 hover:bg-blue-100 dark:hover:bg-blue-700">EUR (€)</a>
+                        <a href="#" class="block px-4 py-2 hover:bg-blue-100 dark:hover:bg-blue-700">GBP (£)</a>
+                        <a href="#" class="block px-4 py-2 hover:bg-blue-100 dark:hover:bg-blue-700">INR (₹)</a>
+                    </div>
+                </div>
+                <button id="theme-toggle" class="p-2 rounded-full hover:bg-blue-700 dark:hover:bg-blue-600">
+                    <i class="fas fa-moon dark:hidden"></i>
+                    <i class="fas fa-sun hidden dark:inline"></i>
+                </button>
+                <a id="login-btn" href="javascript:void(0)" onclick="login()" class="bg-blue-700 hover:bg-blue-800 px-4 py-2 rounded-md">Login</a>
+                <a id="register-btn" href="javascript:void(0)" onclick="register()" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-md">Register</a>
+                <a id="logout-btn" href="javascript:void(0)" onclick="logout()" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-md hidden">Logout</a>
+                <a href="javascript:void(0)" onclick="addFunds()" class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-md hidden md:block">
+                    <i class="fas fa-wallet mr-2"></i> Add Funds
+                </a>
+                <span id="user-profile" class="hidden text-sm bg-blue-800 px-3 py-1 rounded-full"></span>
+                <button class="md:hidden p-2" id="mobile-menu-button">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="md:hidden hidden bg-blue-700 dark:bg-blue-900 px-4 py-2" id="mobile-menu">
+            <a href="#" class="block py-2 hover:bg-blue-600 dark:hover:bg-blue-800 px-2 rounded">Home</a>
+            <div class="py-2">
+                <button class="w-full text-left hover:bg-blue-600 dark:hover:bg-blue-800 px-2 rounded flex justify-between items-center" id="services-toggle">
+                    Services <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="hidden pl-4 mt-1" id="services-menu">
+                    <a href="#youtube" class="block py-2 hover:bg-blue-600 dark:hover:bg-blue-800 px-2 rounded">YouTube</a>
+                    <a href="#instagram" class="block py-2 hover:bg-blue-600 dark:hover:bg-blue-800 px-2 rounded">Instagram</a>
+                    <a href="#facebook" class="block py-2 hover:bg-blue-600 dark:hover:bg-blue-800 px-2 rounded">Facebook</a>
+                    <a href="#tiktok" class="block py-2 hover:bg-blue-600 dark:hover:bg-blue-800 px-2 rounded">TikTok</a>
+                    <a href="#twitter" class="block py-2 hover:bg-blue-600 dark:hover:bg-blue-800 px-2 rounded">Twitter</a>
+                    <a href="#spotify" class="block py-2 hover:bg-blue-600 dark:hover:bg-blue-800 px-2 rounded">Spotify</a>
+                    <a href="#telegram" class="block py-2 hover:bg-blue-600 dark:hover:bg-blue-800 px-2 rounded">Telegram</a>
+                    <a href="#traffic" class="block py-2 hover:bg-blue-600 dark:hover:bg-blue-800 px-2 rounded">Website Traffic</a>
+                </div>
+            </div>
+            <a href="#reviews" class="block py-2 hover:bg-blue-600 dark:hover:bg-blue-800 px-2 rounded">Reviews</a>
+            <a href="#api" class="block py-2 hover:bg-blue-600 dark:hover:bg-blue-800 px-2 rounded">API</a>
+            <a href="#contact" class="block py-2 hover:bg-blue-600 dark:hover:bg-blue-800 px-2 rounded">Contact</a>
+            <div class="py-2">
+                <button class="w-full text-left hover:bg-blue-600 dark:hover:bg-blue-800 px-2 rounded flex justify-between items-center" id="more-toggle">
+                    More <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="hidden pl-4 mt-1" id="more-menu">
+                    <a href="#" class="block py-2 hover:bg-blue-600 dark:hover:bg-blue-800 px-2 rounded">Blog</a>
+                    <a href="#" class="block py-2 hover:bg-blue-600 dark:hover:bg-blue-800 px-2 rounded">FAQ</a>
+                    <a href="#" class="block py-2 hover:bg-blue-600 dark:hover:bg-blue-800 px-2 rounded">Terms</a>
+                    <a href="#" class="block py-2 hover:bg-blue-600 dark:hover:bg-blue-800 px-2 rounded">Privacy</a>
+                </div>
+            </div>
+            <div class="py-2">
+                <a id="mobile-login-btn" href="javascript:void(0)" onclick="login()" class="block py-2 hover:bg-blue-600 dark:hover:bg-blue-800 px-2 rounded">Login</a>
+                <a id="mobile-register-btn" href="javascript:void(0)" onclick="register()" class="block py-2 hover:bg-blue-600 dark:hover:bg-blue-800 px-2 rounded">Register</a>
+                <a id="mobile-logout-btn" href="javascript:void(0)" onclick="logout()" class="block py-2 hover:bg-blue-600 dark:hover:bg-blue-800 px-2 rounded hidden">Logout</a>
+                <a href="javascript:void(0)" onclick="addFunds()" class="block py-2 hover:bg-blue-600 dark:hover:bg-blue-800 px-2 rounded">
+                    <i class="fas fa-wallet mr-2"></i> Add Funds
+                </a>
+            </div>
+            <div class="py-2">
+                <button class="w-full text-left hover:bg-blue-600 dark:hover:bg-blue-800 px-2 rounded flex justify-between items-center" id="currency-toggle">
+                    <i class="fas fa-dollar-sign mr-2"></i> USD <i class="fas fa-chevron-down ml-1 text-sm"></i>
+                </button>
+                <div class="hidden pl-4 mt-1" id="currency-menu">
+                    <a href="#" class="block py-2 hover:bg-blue-600 dark:hover:bg-blue-800 px-2 rounded">USD ($)</a>
+                    <a href="#" class="block py-2 hover:bg-blue-600 dark:hover:bg-blue-800 px-2 rounded">EUR (€)</a>
+                    <a href="#" class="block py-2 hover:bg-blue-600 dark:hover:bg-blue-800 px-2 rounded">GBP (£)</a>
+                    <a href="#" class="block py-2 hover:bg-blue-600 dark:hover:bg-blue-800 px-2 rounded">INR (₹)</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-20">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6 glow-text">Premium SMM Services 🚀</h1>
+            <p class="text-xl mb-8 max-w-2xl mx-auto">High-quality social media services at the most competitive prices. Boost your online presence today! 💯</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#services" class="bg-white text-blue-600 hover:bg-gray-100 px-6 py-3 rounded-md font-bold text-lg pulse-animation">Browse Services 👇</a>
+                <a href="#register" onclick="register()" class="bg-transparent border-2 border-white hover:bg-white hover:text-blue-600 px-6 py-3 rounded-md font-bold text-lg">Get Started Now ✨</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Methods Section -->
+    <section class="py-12 bg-gray-50 dark:bg-gray-800">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-8">Payment Methods 💳</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                <div class="bg-white dark:bg-gray-700 p-4 rounded-lg shadow flex items-center justify-center">
+                    <img src="https://i.ibb.co/21n4PY3q/qr-code.png" alt="QR Code" class="h-24">
+                </div>
+                <div class="bg-white dark:bg-gray-700 p-4 rounded-lg shadow flex items-center justify-center">
+                    <i class="fab fa-cc-paypal text-4xl text-blue-600"></i>
+                </div>
+                <div class="bg-white dark:bg-gray-700 p-4 rounded-lg shadow flex items-center justify-center">
+                    <i class="fab fa-cc-stripe text-4xl text-purple-600"></i>
+                </div>
+                <div class="bg-white dark:bg-gray-700 p-4 rounded-lg shadow flex items-center justify-center">
+                    <i class="fab fa-bitcoin text-4xl text-orange-500"></i>
+                </div>
+                <div class="bg-white dark:bg-gray-700 p-4 rounded-lg shadow flex items-center justify-center">
+                    <i class="fas fa-money-bill-wave text-4xl text-green-600"></i>
+                </div>
+                <div class="bg-white dark:bg-gray-700 p-4 rounded-lg shadow flex items-center justify-center">
+                    <i class="fab fa-cc-visa text-4xl text-blue-800"></i>
+                </div>
+            </div>
+            <div class="mt-8 text-center">
+                <button onclick="addFunds()" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-md font-bold text-lg">
+                    <i class="fas fa-wallet mr-2"></i> Add Funds Now
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-16 container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12">Our Services 💎</h2>
+        
+        <!-- YouTube Services -->
+        <div id="youtube" class="mb-16">
+            <h3 class="text-2xl font-semibold mb-6 flex items-center">
+                <i class="fab fa-youtube text-red-600 mr-3"></i> YouTube Services 🎥
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Service Card 1 -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <h4 class="text-xl font-bold">YouTube Views 👀</h4>
+                            <span class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-2 py-1 rounded">HIGH QUALITY</span>
+                        </div>
+                        <p class="mt-2 text-gray-600 dark:text-gray-300">Real, high-retention views from organic sources</p>
+                        <div class="mt-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-500 dark:text-gray-400">Min:</span>
+                                <span>1,000</span>
+                            </div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-500 dark:text-gray-400">Max:</span>
+                                <span>1,000,000</span>
+                            </div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-500 dark:text-gray-400">Price:</span>
+                                <span class="text-green-600 dark:text-green-400 font-bold">$0.45/1k</span>
+                            </div>
+                        </div>
+                        <button class="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md">
+                            Order Now 🚀
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Service Card 2 -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <h4 class="text-xl font-bold">YouTube Likes 👍</h4>
+                            <span class="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs px-2 py-1 rounded">FAST DELIVERY</span>
+                        </div>
+                        <p class="mt-2 text-gray-600 dark:text-gray-300">High-quality likes from real accounts</p>
+                        <div class="mt-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-500 dark:text-gray-400">Min:</span>
+                                <span>100</span>
+                            </div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-500 dark:text-gray-400">Max:</span>
+                                <span>50,000</span>
+                            </div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-500 dark:text-gray-400">Price:</span>
+                                <span class="text-green-600 dark:text-green-400 font-bold">$1.20/1k</span>
+                            </div>
+                        </div>
+                        <button class="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md">
+                            Order Now 🚀
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Service Card 3 -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <h4 class="text-xl font-bold">YouTube Subscribers 🔔</h4>
+                            <span class="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 text-xs px-2 py-1 rounded">PREMIUM</span>
+                        </div>
+                        <p class="mt-2 text-gray-600 dark:text-gray-300">Real, active subscribers with profile pictures</p>
+                        <div class="mt-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-500 dark:text-gray-400">Min:</span>
+                                <span>100</span>
+                            </div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-500 dark:text-gray-400">Max:</span>
+                                <span>10,000</span>
+                            </div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-500 dark:text-gray-400">Price:</span>
+                                <span class="text-green-600 dark:text-green-400 font-bold">$8.50/1k</span>
+                            </div>
+                        </div>
+                        <button class="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md">
+                            Order Now 🚀
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Instagram Services -->
+        <div id="instagram" class="mb-16">
+            <h3 class="text-2xl font-semibold mb-6 flex items-center">
+                <i class="fab fa-instagram text-pink-600 mr-3"></i> Instagram Services 📸
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Service Card 1 -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <h4 class="text-xl font-bold">Instagram Followers 👥</h4>
+                            <span class="bg-pink-100 dark:bg-pink-900 text-pink-800 dark:text-pink-200 text-xs px-2 py-1 rounded">REAL USERS</span>
+                        </div>
+                        <p class="mt-2 text-gray-600 dark:text-gray-300">Grow your Instagram with real followers</p>
+                        <div class="mt-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-500 dark:text-gray-400">Min:</span>
+                                <span>100</span>
+                            </div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-500 dark:text-gray-400">Max:</span>
+                                <span>50,000</span>
+                            </div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-500 dark:text-gray-400">Price:</span>
+                                <span class="text-green-600 dark:text-green-400 font-bold">$2.50/1k</span>
+                            </div>
+                        </div>
+                        <button class="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md">
+                            Order Now 🚀
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Service Card 2 -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <h4 class="text-xl font-bold">Instagram Likes ❤️</h4>
+                            <span class="bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 text-xs px-2 py-1 rounded">INSTANT</span>
+                        </div>
+                        <p class="mt-2 text-gray-600 dark:text-gray-300">Get more engagement on your posts</p>
+                        <div class="mt-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-500 dark:text-gray-400">Min:</span>
+                                <span>100</span>
+                            </div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-500 dark:text-gray-400">Max:</span>
+                                <span>100,000</span>
+                            </div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-500 dark:text-gray-400">Price:</span>
+                                <span class="text-green-600 dark:text-green-400 font-bold">$0.80/1k</span>
+                            </div>
+                        </div>
+                        <button class="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md">
+                            Order Now 🚀
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Service Card 3 -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <h4 class="text-xl font-bold">Instagram Story Views 👀</h4>
+                            <span class="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 text-xs px-2 py-1 rounded">FAST</span>
+                        </div>
+                        <p class="mt-2 text-gray-600 dark:text-gray-300">Increase your story views instantly</p>
+                        <div class="mt-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-500 dark:text-gray-400">Min:</span>
+                                <span>500</span>
+                            </div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-500 dark:text-gray-400">Max:</span>
+                                <span>100,000</span>
+                            </div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-500 dark:text-gray-400">Price:</span>
+                                <span class="text-green-600 dark:text-green-400 font-bold">$0.30/1k</span>
+                            </div>
+                        </div>
+                        <button class="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md">
+                            Order Now 🚀
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Facebook Services -->
+        <div id="facebook" class="mb-16">
+            <h3 class="text-2xl font-semibold mb-6 flex items-center">
+                <i class="fab fa-facebook text-blue-600 mr-3"></i> Facebook Services 👍
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Service Card 1 -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <h4 class="text-xl font-bold">Facebook Page Likes 👍</h4>
+                            <span class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-2 py-1 rounded">REAL</span>
+                        </div>
+                        <p class="mt-2 text-gray-600 dark:text-gray-300">Increase your page likes with real users</p>
+                        <div class="mt-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-500 dark:text-gray-400">Min:</span>
+                                <span>100</span>
+                            </div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-500 dark:text-gray-400">Max:</span>
+                                <span>50,000</span>
+                            </div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-500 dark:text-gray-400">Price:</span>
+                                <span class="text-green-600 dark:text-green-400 font-bold">$3.00/1k</span>
+                            </div>
+                        </div>
+                        <button class="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md">
+                            Order Now 🚀
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Service Card 2 -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <h4 class="text-xl font-bold">Facebook Post Likes ❤️</h4>
+                            <span class="bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 text-xs px-2 py-1 rounded">INSTANT</span>
+                        </div>
+                        <p class="mt-2 text-gray-600 dark:text-gray-300">Boost engagement on your posts</p>
+                        <div class="mt-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-500 dark:text-gray-400">Min:</span>
+                                <span>100</span>
+                            </div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-500 dark:text-gray-400">Max:</span>
+                                <span>100,000</span>
+                            </div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-500 dark:text-gray-400">Price:</span>
+                                <span class="text-green-600 dark:text-green-400 font-bold">$1.50/1k</span>
+                            </div>
+                        </div>
+                        <button class="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md">
+                            Order Now 🚀
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- TikTok Services -->
+        <div id="tiktok" class="mb-16">
+            <h3 class="text-2xl font-semibold mb-6 flex items-center">
+                <i class="fab fa-tiktok text-black dark:text-white mr-3"></i> TikTok Services 🎵
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Service Card 1 -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <h4 class="text-xl font-bold">TikTok Followers 👥</h4>
+                            <span class="bg-pink-100 dark:bg-pink-900 text-pink-800 dark:text-pink-200 text-xs px-2 py-1 rounded">REAL</span>
+                        </div>
+                        <p class="mt-2 text-gray-600 dark:text-gray-300">Grow your TikTok with real followers</p>
+                        <div class="mt-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-500 dark:text-gray-400">Min:</span>
+                                <span>100</span>
+                            </div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-500 dark:text-gray-400">Max:</span>
+                                <span>50,000</span>
+                            </div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-500 dark:text-gray-400">Price:</span>
+                                <span class="text-green-600 dark:text-green-400 font-bold">$4.50/1k</span>
+                            </div>
+                        </div>
+                        <button class="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md">
+                            Order Now 🚀
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Service Card 2 -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <h4 class="text-xl font-bold">TikTok Likes ❤️</h4>
+                            <span class="bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 text-xs px-2 py-1 rounded">FAST</span>
+                        </div>
+                        <p class="mt-2 text-gray-600 dark:text-gray-300">Get more likes on your TikTok videos</p>
+                        <div class="mt-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-500 dark:text-gray-400">Min:</span>
+                                <span>100</span>
+                            </div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-500 dark:text-gray-400">Max:</span>
+                                <span>100,000</span>
+                            </div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-500 dark:text-gray-400">Price:</span>
+                                <span class="text-green-600 dark:text-green-400 font-bold">$1.80/1k</span>
+                            </div>
+                        </div>
+                        <button class="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md">
+                            Order Now 🚀
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Website Traffic Services -->
+        <div id="traffic" class="mb-16">
+            <h3 class="text-2xl font-semibold mb-6 flex items-center">
+                <i class="fas fa-globe text-blue-500 mr-3"></i> Website Traffic 🌐
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Service Card 1 -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <h4 class="text-xl font-bold">Website Visitors 👥</h4>
+                            <span class="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs px-2 py-1 rounded">REAL</span>
+                        </div>
+                        <p class="mt-2 text-gray-600 dark:text-gray-300">Real visitors to boost your website traffic</p>
+                        <div class="mt-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-500 dark:text-gray-400">Min:</span>
+                                <span>1,000</span>
+                            </div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-500 dark:text-gray-400">Max:</span>
+                                <span>1,000,000</span>
+                            </div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-500 dark:text-gray-400">Price:</span>
+                                <span class="text-green-600 dark:text-green-400 font-bold">$0.50/1k</span>
+                            </div>
+                        </div>
+                        <button class="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md">
+                            Order Now 🚀
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section id="reviews" class="py-16 bg-gray-50 dark:bg-gray-800">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">Customer Reviews ⭐⭐⭐⭐⭐</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 text-2xl">★★★★★</div>
+                        <span class="ml-2 text-sm text-gray-500 dark:text-gray-300">2 days ago</span>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-200 mb-4">"Best SMM panel I've ever used! The YouTube views are high retention and the delivery was super fast. Will definitely order again! 😍"</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="User" class="w-10 h-10 rounded-full mr-3">
+                        <div>
+                            <h4 class="font-semibold">Sarah Johnson</h4>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Digital Marketer</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 text-2xl">★★★★★</div>
+                        <span class="ml-2 text-sm text-gray-500 dark:text-gray-300">1 week ago</span>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-200 mb-4">"The Instagram followers are real and active. My engagement has skyrocketed since I started using this service. Highly recommend! 🙌"</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="User" class="w-10 h-10 rounded-full mr-3">
+                        <div>
+                            <h4 class="font-semibold">Michael Chen</h4>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Influencer</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 text-2xl">★★★★☆</div>
+                        <span class="ml-2 text-sm text-gray-500 dark:text-gray-300">3 weeks ago</span>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-200 mb-4">"Great service overall! The only reason I'm giving 4 stars is because the TikTok likes took a bit longer than expected. But quality was excellent! 👍"</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="User" class="w-10 h-10 rounded-full mr-3">
+                        <div>
+                            <h4 class="font-semibold">Emily Rodriguez</h4>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Content Creator</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">Why Choose Us? 💎</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center p-6 glass rounded-lg">
+                    <div class="text-blue-600 dark:text-blue-400 text-4xl mb-4">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Fast Delivery ⚡</h3>
+                    <p class="text-gray-600 dark:text-gray-300">Most services start within minutes of your order</p>
+                </div>
+                <div class="text-center p-6 glass rounded-lg">
+                    <div class="text-green-600 dark:text-green-400 text-4xl mb-4">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">High Quality 🔒</h3>
+                    <p class="text-gray-600 dark:text-gray-300">Premium services from real sources</p>
+                </div>
+                <div class="text-center p-6 glass rounded-lg">
+                    <div class="text-purple-600 dark:text-purple-400 text-4xl mb-4">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">24/7 Support 🛎️</h3>
+                    <p class="text-gray-600 dark:text-gray-300">Our team is always ready to help you</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- API Section -->
+    <section id="api" class="py-16 bg-gray-50 dark:bg-gray-800">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-8">API Integration 🤖</h2>
+            <div class="max-w-3xl mx-auto bg-white dark:bg-gray-700 p-8 rounded-lg shadow">
+                <h3 class="text-2xl font-semibold mb-4">Powerful API for Developers</h3>
+                <p class="text-gray-600 dark:text-gray-300 mb-6">Integrate our SMM services directly into your application with our robust API. Automate orders, check status, and manage your account programmatically.</p>
+                
+                <div class="mb-6">
+                    <h4 class="text-lg font-semibold mb-2">API Endpoints:</h4>
+                    <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-md">
+                        <code class="text-sm text-gray-800 dark:text-gray-200">
+                            // Get services list<br>
+                            GET https://api.yoursmmpanel.com/services<br><br>
+                            
+                            // Place new order<br>
+                            POST https://api.yoursmmpanel.com/order<br><br>
+                            
+                            // Check order status<br>
+                            GET https://api.yoursmmpanel.com/order/{id}<br><br>
+                            
+                            // Get user balance<br>
+                            GET https://api.yoursmmpanel.com/balance
+                        </code>
+                    </div>
+                </div>
+                
+                <button class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md font-bold">
+                    <i class="fas fa-file-alt mr-2"></i> View Full API Documentation
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">Contact Us 📞</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white dark:bg-gray-700 p-8 rounded-lg shadow">
+                    <h3 class="text-2xl font-semibold mb-4">Get in Touch</h3>
+                    <form>
+                        <div class="mb-4">
+                            <label for="name" class="block text-gray-700 dark:text-gray-300 mb-2">Your Name</label>
+                            <input type="text" id="name" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600">
+                        </div>
+                        <div class="mb-4">
+                            <label for="email" class="block text-gray-700 dark:text-gray-300 mb-2">Email Address</label>
+                            <input type="email" id="email" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600">
+                        </div>
+                        <div class="mb-4">
+                            <label for="subject" class="block text-gray-700 dark:text-gray-300 mb-2">Subject</label>
+                            <input type="text" id="subject" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600">
+                        </div>
+                        <div class="mb-4">
+                            <label for="message" class="block text-gray-700 dark:text-gray-300 mb-2">Message</label>
+                            <textarea id="message" rows="4" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600"></textarea>
+                        </div>
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md font-bold w-full">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+                <div class="bg-white dark:bg-gray-700 p-8 rounded-lg shadow">
+                    <h3 class="text-2xl font-semibold mb-4">Contact Information</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="text-blue-600 dark:text-blue-400 text-xl mr-4 mt-1">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Address</h4>
+                                <p class="text-gray-600 dark:text-gray-300">123 SMM Street, Digital City, 10001</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="text-blue-600 dark:text-blue-400 text-xl mr-4 mt-1">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Email</h4>
+                                <p class="text-gray-600 dark:text-gray-300">support@yoursmmpanel.com</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="text-blue-600 dark:text-blue-400 text-xl mr-4 mt-1">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Phone</h4>
+                                <p class="text-gray-600 dark:text-gray-300">+1 (123) 456-7890</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="text-blue-600 dark:text-blue-400 text-xl mr-4 mt-1">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Working Hours</h4>
+                                <p class="text-gray-600 dark:text-gray-300">24/7 Support</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-8">
+                        <h4 class="font-semibold mb-2">Follow Us</h4>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-2xl">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="text-blue-400 hover:text-blue-600 text-2xl">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="text-pink-600 hover:text-pink-800 text-2xl">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="text-red-600 hover:text-red-800 text-2xl">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-300 py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-4">Your SMM Panel</h3>
+                    <p class="mb-4">Premium social media marketing services for influencers, businesses, and creators.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4">Services</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#youtube" class="hover:text-white">YouTube Services</a></li>
+                        <li><a href="#instagram" class="hover:text-white">Instagram Services</a></li>
+                        <li><a href="#facebook" class="hover:text-white">Facebook Services</a></li>
+                        <li><a href="#tiktok" class="hover:text-white">TikTok Services</a></li>
+                        <li><a href="#traffic" class="hover:text-white">Website Traffic</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4">Company</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white">About Us</a></li>
+                        <li><a href="#" class="hover:text-white">Blog</a></li>
+                        <li><a href="#" class="hover:text-white">Careers</a></li>
+                        <li><a href="#contact" class="hover:text-white">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4">Legal</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white">Terms of Service</a></li>
+                        <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-white">Refund Policy</a></li>
+                        <li><a href="#api" class="hover:text-white">API Documentation</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+                <p>&copy; 2023 Your SMM Panel. All rights reserved. 👑</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Social Float Buttons -->
+    <div class="fixed right-4 bottom-4 space-y-3 z-50">
+        <a href="https://wa.me/yournumber" class="block w-12 h-12 bg-green-500 hover:bg-green-600 rounded-full flex items-center justify-center shadow-lg transition-all">
+            <i class="fab fa-whatsapp text-white text-xl"></i>
+        </a>
+        <a href="https://youtube.com/yourchannel" class="block w-12 h-12 bg-red-500 hover:bg-red-600 rounded-full flex items-center justify-center shadow-lg transition-all">
+            <i class="fab fa-youtube text-white text-xl"></i>
+        </a>
+        <a href="https://instagram.com/yourprofile" class="block w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 rounded-full flex items-center justify-center shadow-lg transition-all">
+            <i class="fab fa-instagram text-white text-xl"></i>
+        </a>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Dark/Light Mode Toggle - Fixed Version
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+        
+        // Check for saved theme preference
+        const savedTheme = localStorage.getItem('theme') || 
+                         (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        
+        if (savedTheme === 'dark') {
+            html.classList.add('dark');
+        } else {
+            html.classList.remove('dark');
+        }
+        
+        // Toggle theme
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            const theme = html.classList.contains('dark') ? 'dark' : 'light';
+            localStorage.setItem('theme', theme);
+        });
+        
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const servicesToggle = document.getElementById('services-toggle');
+        const servicesMenu = document.getElementById('services-menu');
+        const moreToggle = document.getElementById('more-toggle');
+        const moreMenu = document.getElementById('more-menu');
+        const currencyToggle = document.getElementById('currency-toggle');
+        const currencyMenu = document.getElementById('currency-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        servicesToggle.addEventListener('click', () => {
+            servicesMenu.classList.toggle('hidden');
+        });
+        
+        moreToggle.addEventListener('click', () => {
+            moreMenu.classList.toggle('hidden');
+        });
+        
+        currencyToggle.addEventListener('click', () => {
+            currencyMenu.classList.toggle('hidden');
+        });
+        
+        // Snow Effect Toggle
+        const snowToggle = document.getElementById('snow-toggle');
+        const snowCanvas = document.getElementById('snow');
+        let snowActive = true;
+        
+        snowToggle.addEventListener('click', () => {
+            snowActive = !snowActive;
+            if (snowActive) {
+                snowCanvas.style.display = 'block';
+                drawSnowflakes();
+                snowToggle.innerHTML = '<i class="fas fa-snowflake"></i>';
+            } else {
+                snowCanvas.style.display = 'none';
+                snowToggle.innerHTML = '<i class="fas fa-ban"></i>';
+            }
+        });
+        
+        // Snow Effect
+        const ctx = snowCanvas.getContext('2d');
+        
+        function resizeCanvas() {
+            snowCanvas.width = window.innerWidth;
+            snowCanvas.height = window.innerHeight;
+        }
+        
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        
+        const snowflakes = [];
+        const snowflakeCount = 100;
+        
+        for (let i = 0; i < snowflakeCount; i++) {
+            snowflakes.push({
+                x: Math.random() * snowCanvas.width,
+                y: Math.random() * snowCanvas.height,
+                radius: Math.random() * 3 + 1,
+                speed: Math.random() * 2 + 1,
+                opacity: Math.random() * 0.5 + 0.3
+            });
+        }
+        
+        function drawSnowflakes() {
+            if (!snowActive) return;
+            
+            ctx.clearRect(0, 0, snowCanvas.width, snowCanvas.height);
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+            
+            snowflakes.forEach(flake => {
+                ctx.beginPath();
+                ctx.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2);
+                ctx.closePath();
+                ctx.globalAlpha = flake.opacity;
+                ctx.fill();
+                
+                flake.y += flake.speed;
+                if (flake.y > snowCanvas.height) {
+                    flake.y = 0;
+                    flake.x = Math.random() * snowCanvas.width;
+                }
+            });
+            
+            requestAnimationFrame(drawSnowflakes);
+        }
+        
+        drawSnowflakes();
+        
+        // Get Started button fix
+        document.querySelector('a[href="#register"]').addEventListener('click', function(e) {
+            if (!auth.currentUser) {
+                e.preventDefault();
+                register();
+            }
+        });
+    </script>
+</body>
+</html>
