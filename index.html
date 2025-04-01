@@ -136,11 +136,12 @@
         
         // Register function
         window.register = function() {
-            const email = prompt("Enter your email:");
-            const password = prompt("Enter your password:");
-            
-            if (email && password) {
-                createUserWithEmailAndPassword(auth, email, password)
+            const Name = prompt("name:");
+            const Userid = prompt("User id:");
+            const password = prompt("Password:");
+            const Retypepassword= prompt("Retype pepassword:");
+            if ( name && userid) {
+                createUserWithEmailAndPassword(auth, name, userid)
                     .then(() => {
                         alert("Registration successful! Welcome! 👋");
                     })
